@@ -3,10 +3,8 @@ A,B,V = list(map(int,input().split()))
 now, count = 0, 0
 
 oneday = A-B
-print(V / oneday)
 
-5 1 20
-5
+lev = int(V / oneday)
+rem = (V % oneday)
 
-5 1 6
- 1 1.0
+if A >= rem

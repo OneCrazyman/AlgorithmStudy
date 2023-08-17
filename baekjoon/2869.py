@@ -6,15 +6,8 @@ oneday = A-B
 lev = int(V / oneday)
 rem = (V % oneday)
 
-for i in range(lev-1,-1,-1):
-    # print(i)
-    if i * oneday + A >= V:
-        continue
-    else:
-        result = i+2
-        break
-
+if (lev-1) * oneday + A > V:
+    result = lev - int((B-rem)/oneday)
+else : result = lev + 1 - int((A-rem)/oneday)
 
 print(result)
-
-# 2 4 11

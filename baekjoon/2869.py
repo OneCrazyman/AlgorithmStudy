@@ -1,9 +1,10 @@
 #달팽이는 올라가고 싶다
 A,B,V = list(map(int,input().split()))
+now, count = 0, 0
 
 oneday = A-B
-
 lev = int(V / oneday)
+rem = (V % oneday)
 
 for i in range(lev-1,-1,-1):
     # print(i)
@@ -12,6 +13,7 @@ for i in range(lev-1,-1,-1):
     else:
         result = i+2
         break
+
 
 print(result)
 

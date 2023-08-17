@@ -11,3 +11,5 @@ if (lev-1) * oneday + A > V:
 else : result = lev + 1 - int((A-rem)/oneday)
 
 print(result)
+
+# 2 4 11

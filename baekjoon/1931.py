@@ -33,6 +33,4 @@ for t1, t2 in arr: #정렬된 배열 순환
     # if t1 == t2:
     #     pass
 
-
-
 print(count)

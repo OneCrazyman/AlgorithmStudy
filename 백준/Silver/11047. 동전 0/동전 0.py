@@ -1,15 +1,18 @@
 #https://www.acmicpc.net/problem/11047
 from sys import stdin as s
 #s = open("input.txt")
-N, K = map(int, s.readline().split())
+N, K = map(int, input().split())
 list = []
 result = 0
 for _ in range(N):
     list.append(int(s.readline()))
 #
-r = K
 for i in range(N-1,-1,-1):
-    result += r // list[i]
-    r = K % list[i]
+
+    if K//list[i] > 0:
+        result+=K//list[i]
+        K = K%list[i]
+    else:
+        continue
 #
 print(result)

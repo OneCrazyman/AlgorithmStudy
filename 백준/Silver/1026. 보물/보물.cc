@@ -25,7 +25,7 @@ int main() {
 
 	//배열을 오름차순과 내림차순으로 정렬
 	sort(A, A + N); //include the algorithm header
-	sort(B, B + N, greater<int>());
+	sort(B, B + N, greater<>());
 
 	int sum = 0;
 	for (int i = 0; i < N; i++)

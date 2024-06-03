@@ -23,16 +23,16 @@ public class Main1010 {
     }
 
     public static void printNumberOfCase(int n, int m){
-        int nr = 1;
-        for (int i = 1; i <= n; i++) {
+        long nr = 1;
+        for (long i = 1; i <= n; i++) {
             nr *= i;
         }
-        int mnr = 1;
+        long mnr = 1;
         int j = m;
         for (int i = 0; i < n; i++) {
             mnr *= j--;
         }
-        int result = mnr / nr;
+        long result = mnr / nr;
         System.out.println(result);
     }
 }

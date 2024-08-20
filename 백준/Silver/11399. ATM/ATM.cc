@@ -11,7 +11,7 @@ int main() {
 	int N;
 	cin >> N;
 
-	int* ptrArr = new int[N];
+	int ptrArr[1000];
 
 	for (int i = 0; i < N; i++)
 	{
@@ -19,10 +19,13 @@ int main() {
 	}
 	
 	sort(ptrArr, ptrArr+N);
+
 	int result = 0, tmp = 0;
+
 	for (int i = 0; i < N; i++) {
 		tmp += ptrArr[i];
 		result += tmp;
 	}
+
 	cout << result << endl;
 }

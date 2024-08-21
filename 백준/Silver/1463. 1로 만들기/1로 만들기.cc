@@ -1,8 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
-//int arr[10 * 6 + 1];
-int arr[1000001];
+int arr[(int)1e6 + 1];
 int main() {
 	//freopen("input.txt", "r", stdin);
 	ios_base::sync_with_stdio(false);

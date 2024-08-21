@@ -20,12 +20,12 @@ int main() {
 
 		//2 로 나누어진다면, 그에 따른 최솟값 비교 
 		if (i % 2 == 0) {
-			arr[i] = ((arr[i/2] + 1) < arr[i]) ? arr[i/2] + 1 : arr[i];
+			arr[i] = min(arr[i / 2] + 1, arr[i]);
 		}
 
 		//3 ""
 		if (i % 3 == 0) {
-			arr[i] = ((arr[i/3] + 1) < arr[i]) ? arr[i/3] + 1 : arr[i];
+			arr[i] = min(arr[i / 3] + 1, arr[i]);
 		}
 	}
 	cout << arr[n];

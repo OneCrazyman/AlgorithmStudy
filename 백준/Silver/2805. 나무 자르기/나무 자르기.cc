@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 int main() {
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(0);
@@ -10,44 +11,48 @@ int main() {
     int answer;
 
     // input
-    for (size_t i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         std::cin >> tree[i];
     }
 
-    int max = 0;
-    for (size_t i = 0; i < n; i++)
-    {
-        if (tree[i] > max)
-        {
-            max = tree[i];
-        }
-    }
+    int max = *std::max_element(tree,tree+n);
+    
 
     int top = max;
     int bottom = 0;
-    while(bottom <= top)
+    int curr = top / 2;
+    while (1)
     {
-        int mid = (bottom + top) / 2;
-        long long sum = 0;
+        if (bottom > top) break;
 
-        for (size_t i = 0; i < n; i++)
+        long long sum = 0;
+        for (int i = 0; i < n; i++)
         {
-            if (tree[i] > mid)
+            if (tree[i] - curr > 0)
             {
-                sum += tree[i] - mid;
+                sum += tree[i] - curr;
             }
         }
         // 더 위에서 잘라야한다.
-        if (sum >= m)
+        if (sum > m)
         {
-            answer = mid;
-            bottom = mid + 1;
+            answer = curr;
+            bottom = curr+1;
+            curr = (top + bottom) / 2 ;
+            continue;
         }
         // 더 아래에서 잘라야한다.
-        else
+        else if (sum < m)
         {
-            top = mid - 1;
+            top = curr-1;
+            curr = (top + bottom) / 2;
+            continue;
+        }
+        else if (sum == m)
+        {
+            answer = curr;
+            break;
         }
     }
 

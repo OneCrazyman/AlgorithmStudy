@@ -34,8 +34,13 @@ int main() {
 
 	int sum = 0;
 	auto it = arr.begin();
-	for (;)
-	for (int i = 0; i < B-A+1; i++)
+	int count = 1;
+	for (;it != arr.end();++it)
+	{
+		if (count == A) break;
+		count++;
+	}
+	for (int i = 0; i < B - A + 1; i++)
 	{
 		sum += *it;
 		++it;

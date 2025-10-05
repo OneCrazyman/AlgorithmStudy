@@ -1,65 +1,47 @@
-#define _CRT_SECURE_NO_WARNINGS
+/* 
+1. 아이디어
+	정수의 범위가 1~1000, 수열 공식대로 배열을 채우고, 원소로 직접 접근하여 무식하게 더해보자
+
+2. 시간복잡도
+	삽입할 배열 수 1+2+3+ ... n개 (1+n)*n/2 = n^2+n 만큼 삽입 
+	
+
+3. 자료구조
+	int[], int sum
+*/
+
 #include <iostream>
-#include <unordered_set>
+#include <fstream>
 #include <vector>
-#include <numeric>
-using namespace std;
-
-int BIT = 0;
-
-void add();
-void remove();
-void check();
-void toggle();
-void all();
-void empty();
+int A;
+int B;
+std::vector<int> arr; 
 
 int main() {
-	//ios_base::sync_with_stdio(false);
-	//cin.tie(0);
+	std::ios_base::sync_with_stdio(false);
+	std::ifstream cin;
+	cin.open("input.txt");
 
-	freopen("input.txt", "r", stdin);
+	std::cin >> A >> B;
 	
-	int N;
-	cin >> N;
-	for (int i = 0; i < N; i++)
+	for (int i = 1; i <= 1000; i++)
 	{
-		string s;
-		cin >> s;
-		if (s == "add") add();
-		else if (s == "remove") remove();
-		else if (s == "check") check();
-		else if (s == "toggle") toggle();
-		else if (s == "all") all();
-		else if (s == "empty") empty();
+		for (int j = 0; j < i; j++)
+		{
+			arr.push_back(i);
+		}
 	}
-	return 0;
-}
 
-void add() {
-	int i;
-	cin >> i;
-	BIT |= (1 << i);
-}
-void remove() {
-	int i;
-	cin >> i;
-	BIT &= ~(1 << i);
-}
-void check() {
-	int i;
-	cin >> i;
-	if (BIT & (1 << i)) cout << 1 << "\n";
-	else cout << 0 << "\n";
-}
-void toggle() {
-	int i;
-	cin >> i;
-	BIT ^= (1 << i);
-}
-void all() {
-	BIT = (1 << 21) - 1;
-}
-void empty() {
-	BIT = 0;
+	int sum = 0;
+	auto it = arr.begin();
+	for (;)
+	for (int i = 0; i < B-A+1; i++)
+	{
+		sum += *it;
+		++it;
+	}
+
+	std::cout << sum << "\n";
+
+	return 0;
 }

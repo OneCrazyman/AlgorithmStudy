@@ -22,7 +22,7 @@ int main() {
 	std::ifstream cin;
 	cin.open("input.txt");
 
-	std::cin >> A >> B;
+	cin >> A >> B;
 	
 	for (int i = 1; i <= 1000; i++)
 	{

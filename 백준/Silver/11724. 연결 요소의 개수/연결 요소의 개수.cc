@@ -26,8 +26,10 @@
 int N,M;
 std::vector<int> nodeArray[1001];
 bool visited[1001];
+
 void PushNode(int node, int edge);
-bool DFS(int node);
+void DFS(int node);
+
 int main()
 {
 	std::ios_base::sync_with_stdio(false);
@@ -43,8 +45,9 @@ int main()
 	int count = 0;
 	for (int i = 1; i < N+1; i++)
 	{
-		if (DFS(i) == true)
+		if (!visited[i])
 		{
+			DFS(i);
 			count++;
 		}
 	}
@@ -56,19 +59,15 @@ inline void PushNode(int node, int edge)
 	nodeArray[node].push_back(edge);
 }
 
-bool DFS(int node)
+void DFS(int node)
 {
-	if (visited[node])
-		return false;
-
 	visited[node] = true;
 
 	auto it = nodeArray[node].begin();
 	for (;it != nodeArray[node].end();++it)
 	{
 		int edge = *it;
-		DFS(edge);
+		if (!visited[edge])
+			DFS(edge);
 	}
-
-	return true;
 }

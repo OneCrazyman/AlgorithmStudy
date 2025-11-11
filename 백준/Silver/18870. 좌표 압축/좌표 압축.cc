@@ -54,7 +54,7 @@ int main()
 	}
 	
 	std::vector<int64_t> answers;
-	answers.reserve(N);
+	answers.resize(N);
 
 	for (auto& x : arr) {
 		answers[x.second] = x.first;

@@ -1,80 +1,96 @@
 // 1043번
-// 진실을 알게되는 모든 집합을 먼저 구한다
-// 그 다음 진실이 속한 파티일 경우 카운팅을 제외한다
 
-// M개 파티에서 진실 집합 구하기 = O(M*N^2)
-// M개 파티에서 거짓말 가능 카운팅 = O(M*N^2)
-// = O(M*N^2) = 50^3 '=. 10^4
+// 유니온파인드
+// 진실을 알고있는 노드의 부모노드 값을 0으로, 각 파티구성원들끼리 union한다.
+// union 구현시 부모 노드 값이 작은것이 큰값을 대체하도록 한다. (그래야 최종적으로 부모노드가 0이 되기때문)
+// 유니온 파인드 후, 파티리스트를 순회하며 아무 노드를 find한 결과가 0이 아니여야 거짓말 가능한 집단이므로 카운트한다.
+
+// 파티 M번당, 최대 N개끼리 Union
+// => O(M*N) = 50^2
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Policy;
+
 namespace algorithm_study
 {
     class main
     {
-        static int N;
-        static int M;
+        static void Union(int s,int e) {
+            s = Find(s);
+            e = Find(e);
+
+            if (s > e)
+                parent[s] = e;
+            else
+                parent[e] = s;
+        }
+
+        static int Find(int n)
+        {
+            if (n != parent[n])
+            {
+                parent[n] = Find(parent[n]);
+            }
+            return parent[n];
+        }
+
+        const int MAX_LEN = 50;
+        static int[] parent = new int[MAX_LEN + 1];
         static void Main(string[] args)
         {
             int[] nm = Console.ReadLine().Split().Select(int.Parse).ToArray();
-            N = nm[0];
-            M = nm[1];
+            int N = nm[0];
+            int M = nm[1];
 
             int[] truth = Console.ReadLine().Split().Select(int.Parse).ToArray();
             int truthCount = truth[0];
 
-            HashSet<int> knowTruth = new HashSet<int>();
+            int[] knowTruth = new int[truthCount];
             for (int i = 1; i <= truthCount; i++)
             {
-                knowTruth.Add(truth[i]);
+                knowTruth[i-1] = truth[i];
             }
-
-            List<HashSet<int>> partyList = new List<HashSet<int>>();
+            int[][] partyArr = new int[M][];
             for (int i = 0; i < M; i++)
             {
                 int[] party = Console.ReadLine().Split().Select(int.Parse).ToArray();
-                int peopleParty = party[0];
-                HashSet<int> hs = new HashSet<int>();
-                for (int j = 1; j <= peopleParty; j++)
+                int partyCount = party[0];
+                partyArr[i] = new int[partyCount];
+                for (int j = 1; j <= partyCount; j++)
                 {
-                    hs.Add(party[j]);
+                    partyArr[i][j-1] = party[j];
                 }
-                partyList.Add(hs);
             }
 
-            bool updated = true;
-
-            while (updated)
+            // 유니온파인드전 초기화
+            for (int i=1; i<=N; i++)
             {
-                updated = false;
-                // 집합 찾아서 업데이트
-                for (int i = 0; i < M; i++)
+                parent[i] = i;
+            }
+
+            foreach (var know in knowTruth)
+            {
+                parent[know] = 0;
+            }
+
+            for (int i=0; i<M; i++)
+            {
+                int len = partyArr[i].Length;
+                for (int j=0; j<len-1; j++)
                 {
-                    bool hasCommon = knowTruth.Overlaps(partyList[i]);
-                    if (hasCommon)
-                    {
-                        foreach (var p in partyList[i])
-                        {
-                            bool newTruth = knowTruth.Add(p);
-                            if (newTruth)
-                                updated = true;
-                        }
-                    }
+                    Union(partyArr[i][j], partyArr[i][j+1]);
                 }
             }
 
             int ans = 0;
-            for (int i = 0; i < M; i++)
+            for (int i=0; i<M; i++)
             {
-                bool hasCommon = knowTruth.Overlaps(partyList[i]);
-                if (!hasCommon)
+                int result = Find(partyArr[i][0]);
+                if (result != 0)
                 {
                     ans++;
-
                 }
             }
             Console.WriteLine(ans);

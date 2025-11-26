@@ -16,8 +16,8 @@ public class Solution {
         for(int i=0; i<progresses.Length; i++){
             int pro = progresses[i];
             int speed = speeds[i];
-            int day = (100-pro)/speed;
-            if (day*speed<100-pro) day++;
+            int day = (int)Math.Ceiling((100-pro)/(double)speed);
+            // if (day*speed<100-pro) day++;
             
             // Counting
             if (day > prevday){

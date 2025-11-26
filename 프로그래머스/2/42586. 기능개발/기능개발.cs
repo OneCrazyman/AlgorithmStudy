@@ -1,36 +1,44 @@
+// 프로그래머스 - 기능개발
+
+// 작업이 끝나기까지 남은 일수를 계산 [v]
+// 각 작업 순서때 자기보다 일자가 낮으면 카운트+1 ,높아지면 다음 배포로 넘어가고 반복 []
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-public class Solution
-{
-    public int[] solution(int[] progresses, int[] speeds)
-    {
-        int[] answer = new int[] { };
-
-        var tmp = progresses.Select((item, idx) => (int)Math.Ceiling( (double)(100 - item) / speeds[idx] ));
-
-        List<int> deploy = new List<int>();
-        List<int> Remains = new List<int>();
-
-        int lastBig = -1;
-        foreach(int itm in tmp)
-        {
-            if (lastBig < itm)
-                lastBig = itm;
-
-            deploy.Add(lastBig);
+public class Solution {
+    public int[] solution(int[] progresses, int[] speeds) {
+        List<int> answer = new List<int>();
+        
+        // Calculate
+        // init
+        int count = 0;        
+        int prevday = 0;
+        for(int i=0; i<progresses.Length; i++){
+            int pro = progresses[i];
+            int speed = speeds[i];
+            int day = (100-pro)/speed;
+            if (day*speed<100-pro) day++;
+            
+            if (i==0){
+                count=1;
+                prevday = day;
+                continue;
+            }
+            
+            // Counting
+            if (day > prevday){
+                answer.Add(count);
+                count=1;
+                prevday = day;
+            }
+            else{
+                count++;   
+            }            
         }
-
-        var tmp2 = from itm in deploy
-                   group itm by itm into g
-                   select new
-                   {
-                       CNT = g.Count()
-                   };
-
-        answer = tmp2.Select(x => x.CNT).ToArray();
-
-        return answer;
+        answer.Add(count);
+        
+        return answer.ToArray();
     }
+
 }

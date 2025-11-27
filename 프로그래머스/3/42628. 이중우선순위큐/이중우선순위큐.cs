@@ -50,14 +50,14 @@ public class Solution {
             if (map.Count == 0) return;
             int key = map.First().Key;
             if (map[key] == 1) map.Remove(key);
-            else map[key]++;
+            else map[key]--;
         }
         
         void DeleteMax(){
             if (map.Count == 0) return;
             int key = map.Last().Key;
             if (map[key] == 1) map.Remove(key);
-            else map[key]++;
+            else map[key]--;
         }
         
 }
